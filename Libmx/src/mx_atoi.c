@@ -18,7 +18,7 @@ int mx_atoi(const char *str) {
 
     while (str[i]) {
         if (mx_isspace(str[i]) || !mx_isdigit(str[i])) {
-            return 0;
+            return -1;
         }
         result = result * 10 + str[i] - '0';
         i++;

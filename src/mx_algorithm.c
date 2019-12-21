@@ -1,14 +1,24 @@
 #include "../Libmx/src/libmx.h"
 
+static void clear_routes(struct s_path** paths) {
+	int i;
+	for (i = 0; paths[i] != NULL; i++) {
+		free(paths[i]);
+		paths[i] = NULL;
+	}
+}
+
 static void add_best_route(struct s_island* island, struct s_island* to_island, struct s_path* path){
 	to_island->best_routes[to_island->best_routes_count] = mx_create_path(island, path->length_of_bridge);
 	to_island->best_routes[to_island->best_routes_count + 1] = NULL;
 	to_island->best_routes_count = to_island->best_routes_count + 1;
 }
 
-static void init_best_routes(struct s_island* island, struct s_island* to_island, struct s_path* path, int number_of_islands){
+static void init_best_routes(struct s_island* island, struct s_island* to_island,
+							 struct s_path* path){
 	to_island->shortest_path = island->shortest_path + path->length_of_bridge;
-	to_island->best_routes = (struct s_path**) malloc(number_of_islands * sizeof(struct s_path*));
+	// to_island->best_routes = (struct s_path**) malloc(number_of_islands * sizeof(struct s_path*));
+	clear_routes(to_island->best_routes);
 	to_island->best_routes_count = 0;
 	add_best_route(island, to_island, path);
 }
@@ -27,7 +37,7 @@ void mx_process_island(struct s_island* island, int number_of_islands){
 		if (island->shortest_path + path->length_of_bridge < to_island->shortest_path 
 		    || to_island->shortest_path == -1){
 
-			init_best_routes(island, to_island, path, number_of_islands);
+			init_best_routes(island, to_island, path);
 			mx_process_island(to_island, number_of_islands);
 		} else if (island->shortest_path + path->length_of_bridge == to_island->shortest_path) {
 			add_best_route(island, to_island, path);
@@ -48,7 +58,9 @@ void mx_algo(struct s_island** islands, int number_of_islands){
 		k = 0;
 		while (islands[k] != NULL){
 			islands[k]->shortest_path = -1;
-			islands[k]->best_routes = (struct s_path**) malloc(number_of_islands * sizeof(struct s_path*));
+			// mx_free_paths(islands[k]->best_routes);
+			// islands[k]->best_routes = (struct s_path**) malloc(number_of_islands * sizeof(struct s_path*));
+			clear_routes(islands[k]->best_routes);
     		islands[k]->best_routes_count = 0;
     		islands[k]->best_routes[0] = NULL;
 			k++;

@@ -36,22 +36,25 @@ int mx_err_file_is_empty(char* text_of_file, char* filename) {
 int mx_err_1st_line_invalid(char* first_line) {
 	int number_of_islands = mx_atoi(first_line);
 
-    if (number_of_islands == 0){
+    if (number_of_islands == -1){
         mx_printstr("error: line 1 is not valid\n");
         return 1;
 	}
+    if (number_of_islands == 0){
+        return 1;
+    }
 	return 0;
 }
 
 // if one of the remaining liness doesn't match the format above;
-int mx_err_invalid_lines(char* line, int index) {
-    if (mx_split_line(line) == NULL) {
-        mx_printstr("error: line ");
-        mx_printstr(mx_itoa(index + 1));
-        mx_printstr(" is not valid\n");
-        return 1;
-    }
-    return 0;
+void mx_err_invalid_lines(int index) {
+    char *line = mx_itoa(index + 1);
+
+    mx_printstr("error: line ");
+    mx_printstr(line);
+    mx_printstr(" is not valid\n");
+
+    free(line);
 }
 
 // if the number received on the first line does no coincide with the number of islands

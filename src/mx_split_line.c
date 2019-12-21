@@ -55,14 +55,25 @@ static t_bridge* create_bridge_instance(char* islandName1, char* islandName2, in
     t_bridge* bridge = (t_bridge*) malloc(sizeof(t_bridge));
 
     bridge->islandName1 = (char*) malloc(sizeof(char) * (mx_strlen(islandName1) + 1));
-    bridge->islandName1 = mx_strcpy(bridge->islandName1, islandName1);
+    mx_strcpy(bridge->islandName1, islandName1);
 
     bridge->islandName2 = (char*) malloc(sizeof(char) * (mx_strlen(islandName2) + 1));
-    bridge->islandName2 = mx_strcpy(bridge->islandName2, islandName2);
+    mx_strcpy(bridge->islandName2, islandName2);
 
     bridge->length_of_bridge = length_of_bridge;
+    free(islandName1);
+    free(islandName2);
 
     return bridge;
+}
+
+static void free_string_array(char** array) {
+    int i;
+    for (i = 0; array[i] != NULL; i++) {
+        free(array[i]);
+    }
+
+    free(array);
 }
 
 t_bridge* mx_split_line(char *line) {
@@ -71,11 +82,19 @@ t_bridge* mx_split_line(char *line) {
     char* dup = line;
 
     if (check_delims(dup)) {
+        free_string_array(split_by_hyphen);
+        free_string_array(split_by_coma);
         return NULL;
     }
     if (check_lines(split_by_hyphen, split_by_coma)) {
+        free_string_array(split_by_hyphen);
+        free_string_array(split_by_coma);
         return NULL;
     }
     
-    return create_bridge_instance(split_by_hyphen[0], split_by_coma[0], mx_atoi(split_by_coma[1]));
+    t_bridge* bridge = create_bridge_instance(mx_strdup(split_by_hyphen[0]),
+                                              mx_strdup(split_by_coma[0]), mx_atoi(split_by_coma[1]));
+    free_string_array(split_by_hyphen);
+    free_string_array(split_by_coma);
+    return bridge;
 }

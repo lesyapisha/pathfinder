@@ -2,8 +2,9 @@
 
 struct s_island* mx_create_island(char *name, int num_of_bridges){
 	struct s_island* island = (struct s_island*) malloc(sizeof(struct s_island));
+	
 	island->name = (char*) malloc(sizeof(char) * (mx_strlen(name) + 1));
-	island->name = mx_strcpy(island->name, name);
+	mx_strcpy(island->name, name);
 	//створюємо масив структур типу s_path, що описує всі можливі шляхи з даного острову
 	island->paths = (struct s_path**) malloc((num_of_bridges + 1) * sizeof(struct s_path*));
 	island->path_count = 0;
@@ -16,21 +17,22 @@ struct s_island* mx_create_island(char *name, int num_of_bridges){
 	return island;
 }
 
-void mx_free_islands(struct s_island** islands, int number_of_islands) {
+void mx_free_islands(struct s_island** islands){
 	int i;
 
-	for (i = 0; i < number_of_islands; i++) {
+	for (i = 0; islands[i] != NULL; i++) {
 		free(islands[i]->name);
 		mx_free_paths(islands[i]->paths);
 		mx_free_paths(islands[i]->best_routes);
+		free(islands[i]);
 	}
 	free(islands);
 }
 
 //створює і додає структуру типу Island в масив islands, якщо такої ще не існує
-struct s_island* mx_get_island(char *name, struct s_island ***islands_p, int num_of_bridges){
+struct s_island* mx_get_island(char *name, struct s_island **islands, int num_of_bridges){
 	int i;
-	struct s_island** islands = *islands_p;
+	// struct s_island** islands = *islands_p;
 
 	for (i = 0; islands[i] != NULL; i++){
 		if (mx_strcmp(islands[i]->name, name) == 0){
@@ -50,8 +52,8 @@ void mx_fill_islands(t_bridge** bridges, struct s_island** islands, int num_of_b
 
 	for (int index = 0; index < num_of_bridges; index++){
 		//записуємо в поле paths структури Island острів-пару з файлу: для island1 це island2, і навпаки
-        island1 = mx_get_island(bridges[index]->islandName1, &islands, num_of_bridges);
-        island2 = mx_get_island(bridges[index]->islandName2, &islands, num_of_bridges);
+        island1 = mx_get_island(bridges[index]->islandName1, islands, num_of_bridges);
+        island2 = mx_get_island(bridges[index]->islandName2, islands, num_of_bridges);
         //створюємо нову структуру s_path і додаємо його в paths для island1
         island1->paths[island1->path_count] = mx_create_path(island2, bridges[index]->length_of_bridge);
         island1->path_count = island1->path_count + 1;

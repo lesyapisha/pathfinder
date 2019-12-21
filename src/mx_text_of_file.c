@@ -14,7 +14,10 @@ int mx_text_of_file(int argc, char *argv[], char ***lines){
     *lines = mx_strsplit(text_of_file, '\n');    
 	//  error if the file is empty
     if (mx_err_file_is_empty(text_of_file, argv[1])){
+        free(text_of_file);
         return 1;
     }
+    free(text_of_file);
+
     return 0;
 }
