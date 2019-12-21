@@ -6,7 +6,7 @@ char *mx_strchr(const char *s, int c) {
     for (;; ++s) {
         if (*s == a)
             return ((char *)s);
-	    if (*s == '\0')
-	        return (NULL);
+        if (*s == '\0')
+            return (NULL);
     }
 }

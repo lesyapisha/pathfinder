@@ -1,7 +1,8 @@
-#include "../Libmx/src/libmx.h"
+#include "pathfinder.h"
 
 static bool str_is_alpha(char *str) {
     int index = 0;
+
     while (str[index] != '\0') {
         if (!mx_isalpha(str[index])) {
             return false;
@@ -33,7 +34,7 @@ static int check_lines(char **split_by_hyphen, char **split_by_coma) {
 }
 
 // check the number of allowed delimeters
-static int check_delims(char* dup) {
+static int check_delims(char *dup) {
     int num_of_hyphen = 0;
     int num_of_coma = 0;
 
@@ -51,13 +52,17 @@ static int check_delims(char* dup) {
     return 0;
 }
 
-static t_bridge* create_bridge_instance(char* islandName1, char* islandName2, int length_of_bridge) {
-    t_bridge* bridge = (t_bridge*) malloc(sizeof(t_bridge));
+static t_bridge* create_bridge_instance(char *islandName1, 
+                                        char *islandName2, 
+                                        int length_of_bridge) {
+    t_bridge *bridge = (t_bridge*) malloc(sizeof(t_bridge));
 
-    bridge->islandName1 = (char*) malloc(sizeof(char) * (mx_strlen(islandName1) + 1));
+    bridge->islandName1 = (char*) malloc(sizeof(char) 
+                          * (mx_strlen(islandName1) + 1));
     mx_strcpy(bridge->islandName1, islandName1);
 
-    bridge->islandName2 = (char*) malloc(sizeof(char) * (mx_strlen(islandName2) + 1));
+    bridge->islandName2 = (char*) malloc(sizeof(char) 
+                          * (mx_strlen(islandName2) + 1));
     mx_strcpy(bridge->islandName2, islandName2);
 
     bridge->length_of_bridge = length_of_bridge;
@@ -67,7 +72,7 @@ static t_bridge* create_bridge_instance(char* islandName1, char* islandName2, in
     return bridge;
 }
 
-static void free_string_array(char** array) {
+static void free_string_array(char **array) {
     int i;
     for (i = 0; array[i] != NULL; i++) {
         free(array[i]);
@@ -76,10 +81,10 @@ static void free_string_array(char** array) {
     free(array);
 }
 
-t_bridge* mx_split_line(char *line) {
-    char** split_by_hyphen = mx_strsplit(line, '-');
-    char** split_by_coma = mx_strsplit(split_by_hyphen[1], ',');
-    char* dup = line;
+t_bridge *mx_split_line(char *line) {
+    char **split_by_hyphen = mx_strsplit(line, '-');
+    char **split_by_coma = mx_strsplit(split_by_hyphen[1], ',');
+    char *dup = line;
 
     if (check_delims(dup)) {
         free_string_array(split_by_hyphen);
@@ -93,7 +98,8 @@ t_bridge* mx_split_line(char *line) {
     }
     
     t_bridge* bridge = create_bridge_instance(mx_strdup(split_by_hyphen[0]),
-                                              mx_strdup(split_by_coma[0]), mx_atoi(split_by_coma[1]));
+                                              mx_strdup(split_by_coma[0]), 
+                                              mx_atoi(split_by_coma[1]));
     free_string_array(split_by_hyphen);
     free_string_array(split_by_coma);
     return bridge;

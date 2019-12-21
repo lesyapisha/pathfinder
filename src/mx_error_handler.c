@@ -2,7 +2,7 @@
 
 //  error if there are an invalid number of command-lines arguments
 int mx_err_valid_command_lines(int argc) {
-    if (argc != 2) {
+    if (argc != 2){
         mx_printstr("usage: ./pathfinder [filename]\n");
         return 1;
     }
@@ -40,26 +40,28 @@ int mx_err_1st_line_invalid(char *first_line) {
         mx_printstr("error: line 1 is not valid\n");
         return 1;
     }
-    return 0;
-}
-
-// if one of the remaining liness doesn't match the format above;
-int mx_err_invalid_lines(char *line, int index) {
-    if (mx_split_line(line) == NULL) {
-        mx_printstr("error: line ");
-        mx_printstr(mx_itoa(index + 1));
-        mx_printstr(" is not valid\n");
+    if (number_of_islands == 0) {
         return 1;
     }
     return 0;
 }
 
+// if one of the remaining liness doesn't match the format above;
+void mx_err_invalid_lines(int index) {
+    char *line = mx_itoa(index + 1);
+
+    mx_printstr("error: line ");
+    mx_printstr(line);
+    mx_printstr(" is not valid\n");
+
+    free(line);
+}
+
 // if the number received on the first line does no coincide with the number of islands
-int mx_err_invalid_number_of_islands(struct s_island **islands, 
-                                     int number_of_islands) {
+int mx_err_invalid_number_of_islands(struct s_island **islands, int number_of_islands) {
     int i = 0;
     for (; islands[i] != NULL; i++) {}
-    if (number_of_islands != i) {
+    if (number_of_islands != i){
         mx_printstr("error: invalid number of islands\n");
         return 1;
     }

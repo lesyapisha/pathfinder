@@ -1,7 +1,7 @@
 #include "libmx.h"
 
 char *mx_file_to_str(const char *filename) {
-  	int file_descriptor = 0;
+    int file_descriptor = 0;
     int size_read = 0;
     int size_file = 0;
     char buf[128];

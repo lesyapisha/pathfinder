@@ -19,6 +19,7 @@ mx_output_paths.c \
 mx_size_of_file.c \
 mx_split_line.c \
 mx_text_of_file.c \
+mx_pair_factory.c \
 
 SRCF = \
 src/main.c \
@@ -31,6 +32,7 @@ src/mx_output_paths.c \
 src/mx_size_of_file.c \
 src/mx_split_line.c \
 src/mx_text_of_file.c \
+src/mx_pair_factory.c \
 
 OBJ = \
 main.o \
@@ -43,6 +45,7 @@ mx_output_paths.o \
 mx_size_of_file.o \
 mx_split_line.o \
 mx_text_of_file.o \
+mx_pair_factory.o \
 
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
 

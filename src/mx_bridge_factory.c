@@ -1,5 +1,10 @@
-#include "../Libmx/src/libmx.h"
+#include "pathfinder.h"
 
+static void free_bridge(t_bridge* bridge) {
+    free(bridge->islandName1);
+    free(bridge->islandName2);
+    free(bridge);
+}
 //Rename it to something like fill_bridges
 int mx_fill_bridges(char **lines, t_bridge** array_of_bridges){
     int index = 1;
@@ -12,6 +17,7 @@ int mx_fill_bridges(char **lines, t_bridge** array_of_bridges){
     while (lines[index]) {
         t_bridge* bridge = mx_split_line(lines[index]);
         if (bridge == NULL){
+            array_of_bridges[index - 1] = NULL;
             mx_err_invalid_lines(index);
             return 1;
         }
@@ -25,13 +31,11 @@ int mx_fill_bridges(char **lines, t_bridge** array_of_bridges){
 }
 
 void mx_free_bridges(t_bridge** bridges) {
-	int i;
+    int i;
 
     for (i = 0; bridges[i] != NULL; i++) {
-        free(bridges[i]->islandName1);
-        free(bridges[i]->islandName2);
-        free(bridges[i]);
+        free_bridge(bridges[i]);
     }
 
-	free(bridges);
+    free(bridges);
 }
