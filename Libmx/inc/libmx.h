@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-typedef struct  s_list {
+typedef struct s_list {
 	void *data;
 	struct s_list *next;
 }	t_list;
@@ -84,8 +84,12 @@ t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *));
 //non-library functions
 
 bool mx_isspace(char c);
+bool mx_isdigit(int c);
+bool mx_isalpha(int c);
 int mx_strncmp(const char *s1, const char *s2, int n);
 char *mx_strchr(const char *s, int c);
 void mx_strdel(char **str);
+int mx_atoi(const char *str);
+int mx_size_arr(char** arr);
 
 #endif

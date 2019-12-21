@@ -60,6 +60,9 @@ SRC = ./mx_binary_search.c \
 	./mx_swap_char.c\
 	./mx_strchr.c \
 	./mx_strncmp.c \
+	./mx_atoi.c \
+	./mx_isalpha.c \
+	./mx_isdigit.c \
 
 SRCS = ./src/mx_binary_search.c \
 	./src/mx_memrchr.c \
@@ -118,6 +121,9 @@ SRCS = ./src/mx_binary_search.c \
 	./src/mx_swap_char.c\
 	./src/mx_strchr.c \
 	./src/mx_strncmp.c \
+	./src/mx_atoi.c \
+	./src/mx_isalpha.c \
+	./src/mx_isdigit.c \
 
 OBJ = ./mx_binary_search.o \
 	./mx_memrchr.o \
@@ -176,6 +182,9 @@ OBJ = ./mx_binary_search.o \
 	./mx_swap_char.o\
 	./mx_strchr.o \
 	./mx_strncmp.o \
+	./mx_atoi.o \
+	./mx_isalpha.o \
+	./mx_isdigit.o \
 
 OBJO = ./obj/mx_binary_search.o \
 	./obj/mx_memrchr.o \
@@ -234,6 +243,9 @@ OBJO = ./obj/mx_binary_search.o \
 	./obj/mx_swap_char.o\
 	./obj/mx_strchr.o\
 	./obj/mx_strncmp.o\
+	./obj/mx_atoi.o \
+	./obj/mx_isalpha.o \
+	./obj/mx_isdigit.o \
 
 CFLGS = -std=c11 -Wall -Wextra -Wpedantic -Werror 
 all: install uninstall
