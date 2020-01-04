@@ -10,24 +10,24 @@ char *mx_strtrim(const char *str){
 
     //set first symbol not space position
     for (int i = 0; i <= length; i++) {
-    	if (mx_isspace(str[i])) {
-    		pos_begin++;
-    	} else {
-    		break;
-    	}
+        if (mx_isspace(str[i])) {
+            pos_begin++;
+        } else {
+            break;
+        }
     }
     //set last symbol before space position
     for (int i = length - 1; i >= 0; i--) {
-    	if (mx_isspace(str[i])){
-    		pos_end--;
-    	} else {
-    		break;
-    	}
+        if (mx_isspace(str[i])){
+            pos_end--;
+        } else {
+            break;
+        }
     }
     //return empty string if no symbols in string
     if (pos_begin == length || pos_end == -1)  {
-    	char *string = "";
-    	return string;
+        char *string = "";
+        return string;
     }
 
     //copy string 
@@ -36,8 +36,8 @@ char *mx_strtrim(const char *str){
     int j = 0;
 
     for (int i = pos_begin; i != pos_end + 1; i++) {
-    	newstring[j] = str[i];
-    	j++;
+        newstring[j] = str[i];
+        j++;
     }
 
     newstring[j] = '\0';

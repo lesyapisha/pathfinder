@@ -1,7 +1,7 @@
 #include "libmx.h"
 
 void mx_print_unicode(wchar_t c) {
-	char str[5] = {0};
+    char str[5] = {0};
 
     if (c <= 0x80) {
         str[0] = ((c >> 0) & 0x7F) | 0x00;
